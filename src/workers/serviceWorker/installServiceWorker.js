@@ -4,7 +4,7 @@ export default function serviceWorker(){
     
             try {
                 let reg = await navigator.serviceWorker.register("./src/workers/serviceWorker/worker.js");
-                console.log(`Service Worker registered at ${reg.scope}`);
+                // console.log(`Service Worker registered at ${reg.scope}`);
     
             } catch (err) {
                 console.error(`Bothata ke bo : ${err}`);

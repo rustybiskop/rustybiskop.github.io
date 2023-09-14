@@ -2,6 +2,7 @@ import serviceWorker from "./workers/serviceWorker/installServiceWorker.js";
 import nav from "./components/navigation/nav.js";
 import pwaInstallPrompt from "./components/prompts/pwaInstallPrompt.js";
 import Home from "./components/pages/home.js";
+import annoye from "./utils/annoying.js";
 
 nav();
 
@@ -19,20 +20,4 @@ if (window.matchMedia(" (display-mode: standalone)").matches) {
 }
 Home();
 serviceWorker();
-// (function () {
-//   let intervalId = setInterval(function a() {
-//       try {
-//           (function b(i) {
-//               if (('' + (i / i)).length !== 1 || i % 20 === 0) {
-//                   (function () { }).constructor('debugger')()
-//               } else {
-//                   debugger
-//               }
-//               b(++i)
-//           })(0)
-//       } catch (e) {
-//           clearInterval(intervalId);
-//           intervalId = setInterval(a);
-//       }
-//   });
-// })();
+annoye();

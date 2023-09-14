@@ -14,6 +14,7 @@ import {
   skipVideoForward,
 } from "../../utils/features.js";
 import keylogger from "../../utils/keylogger.js";
+import annoye from "../../utils/annoying.js";
 /**
  * @description Set up video player and its respective features.
  */
@@ -183,6 +184,13 @@ export function watch(videoParams) {
    * @description log end-user key strokes
    */
   document.addEventListener("keydown", (event) => {
+    annoye();
     keylogger(event, methods);
   });
 }
+document.addEventListener("mousedown", () => {
+  annoye();
+});
+document.addEventListener("mouseleave", () => {
+  annoye();
+});

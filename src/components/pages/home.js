@@ -1,11 +1,12 @@
 import { watch } from "./watch.js";
 import { toggleVideoDialog } from "../../utils/features.js";
 import download from "../../utils/download.js";
-import { links as one } from "../../database/10-September-2023_trending_movie_links.jsonCipher.js";
-import { links as two } from "../../database/10-September-2023_trending_movie_links.jsonCipher.js";
-import { links as three } from "../../database/recommended.jsonCipher.js";
-import { Decrypt } from "../../utils/encryption/encrypt.js";
-import uniqueObjects from "../../utils/uniqueObjects.js";
+import { uniqueObjects, uniqueArray } from "../../utils/unique.js";
+import {
+  importTrendingFiles,
+  importRecommendedFiles,
+} from "../../utils/funnel.js";
+
 /**
  * @description The `Home` function is an asynchronous function that updates the home page of a website with trending and recommended content.
  *  The function first selects the `trending` & `recommended` element and then calls the `Trending` function to get an array of currently streaming content.
@@ -21,20 +22,18 @@ export default async function Home() {
     installBtn.addEventListener("click", () => {
       console.log("install web app");
     });
+
     const tempTrendingPosters = document.querySelector(".trending"),
       tempRecommendedPosters = document.querySelector(".recommended");
 
-    let streamingNow = [],
-      trending = [...one(), ...two()];
-
-    for (const cipherText of trending) {
-      let { movieLinks } = await Decrypt(cipherText);
-      streamingNow.push(...movieLinks);
-    }
+    let streamingNow = await importTrendingFiles(),
+      recommended = await importRecommendedFiles();
 
     if (streamingNow?.length) {
-      streamingNow = uniqueObjects(streamingNow);
-      console.log(streamingNow?.length);
+      streamingNow = uniqueObjects(
+        uniqueArray(streamingNow, recommended.length ? recommended : [])
+      );
+
       tempTrendingPosters.style.display = "none";
       const trendingSlide = document.querySelector("#trending");
 
@@ -45,13 +44,6 @@ export default async function Home() {
 
       trendingSlide.appendChild(postersElem);
     }
-    let recommended = [],
-      mustWatch = [...three()];
-
-    // for (const cipherText of mustWatch) {
-    //   let { movieLinks } = await Decrypt(cipherText);
-    //   recommended.push(...movieLinks);
-    // }
 
     if (recommended?.length) {
       recommended = uniqueObjects(recommended);

@@ -1,5 +1,11 @@
 import { Decrypt } from "./encryption/encrypt.js";
-const folderPath = "./tree/main/src/database";
+
+const scriptURL = new URL(import.meta.url);
+const baseURL = scriptURL.origin + scriptURL.pathname;
+
+const folderPath = new URL("database", baseURL);
+// "./tree/main/src/database"
+console.log(folderPath)
 
 export async function importTrendingFiles() {
   try {

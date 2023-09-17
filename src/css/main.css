@@ -333,6 +333,7 @@ input[type="checkbox"]:checked ~ ul {
   justify-content: space-evenly;
   justify-items: center;
   flex-flow: row nowrap;
+  width:inherit;
 }
 
 #video-container:hover #control-buttons {

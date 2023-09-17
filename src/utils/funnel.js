@@ -42,7 +42,7 @@ async function getFile(name) {
       fileNames = directoryListing
         .match(/<a href="(.+?)">/g)
         .map((match) => match.substring(9, match.length - 2));
-        console.log(directoryListing)
+        // console.log(directoryListing)
 console.log(fileNames)
     return fileNames.filter(
       (file) => file.includes(name) && file.endsWith(".js")

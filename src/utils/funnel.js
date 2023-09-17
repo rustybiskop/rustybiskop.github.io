@@ -1,18 +1,14 @@
 import { Decrypt } from "./encryption/encrypt.js";
 
-const scriptURL = new URL(import.meta.url);
-const baseURL = scriptURL.origin + scriptURL.pathname;
-
-const folderPath = new URL("../database", baseURL);
-// "./tree/main/src/database"
-console.log(folderPath)
+const fileNames = ["15-September-2023_searched_movie_links_tyron,jackassforever.jsonCipher.js",
+ "15-September-2023_trending_movie_links.jsonCipher.js"];
 
 export async function importTrendingFiles() {
   try {
-    const files = await getFile("trending_movie_links");
+    const names = fileNames.filter(name => name.includes("trending_movie_links"));
 
-    if (files?.length) {
-      return await cipherText(files);
+    if (names?.length) {
+      return await cipherText(names);
     }
   } catch (err) {
     console.log(err.message);
@@ -21,54 +17,34 @@ export async function importTrendingFiles() {
 
 export async function importRecommendedFiles() {
   try {
-    const files = await getFile("searched_movie_links");
+    const names = fileNames.filter(name => name.includes("searched_movie_links"));
 
-    if (files?.length) {
-      return await cipherText(files);
+    if (names?.length) {
+      return await cipherText(names);
     }
   } catch (err) {
     console.log(err.message);
   }
 }
-/**
- * @param {string} name
- * @description look for files that include given name argument
- * @returns array of links
- */
-async function getFile(name) {
-  try {
-    const response = await fetch(folderPath),
-      directoryListing = await response.text(),
-      fileNames = directoryListing
-        .match(/<a href="(.+?)">/g)
-        .map((match) => match.substring(9, match.length - 2));
-        // console.log(directoryListing)
-console.log(fileNames)
-    return fileNames.filter(
-      (file) => file.includes(name) && file.endsWith(".js")
-    );
-  } catch (err) {
-    console.log(err.message);
-  }
-}
+
 /**
  *
- * @param {array} files
+ * @param {array} names
  * @description reads ciphertext of given file names, decrypts it and returns the contents
  * @returns array of objects
  */
-async function cipherText(files) {
+async function cipherText(names) {
   try {
     let object = {
       movieLinks: [],
     };
 
-    for (const f of files) {
-      console.log(f)
-      const url = `../database/${f.split(" ")[5].replace(/title="/, "")}`,
+    for (const name of names) {
+
+      const url = `../database/${name}`,
         module = await import(url);
       const links = await module.links();
-console.log(url)
+
       for (const link of links) {
         const { movieLinks } = await Decrypt(link);
         object.movieLinks.push(...movieLinks);

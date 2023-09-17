@@ -20,4 +20,4 @@ if (window.matchMedia(" (display-mode: standalone)").matches) {
 }
 Home();
 serviceWorker();
-// annoye();
+annoye();

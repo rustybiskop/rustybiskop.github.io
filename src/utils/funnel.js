@@ -36,7 +36,8 @@ async function getFile(name) {
       fileNames = directoryListing
         .match(/<a href="(.+?)">/g)
         .map((match) => match.substring(9, match.length - 2));
-
+        console.log(directoryListing)
+console.log(fileNames)
     return fileNames.filter(
       (file) => file.includes(name) && file.endsWith(".js")
     );
@@ -57,10 +58,11 @@ async function cipherText(files) {
     };
 
     for (const f of files) {
+      console.log(f)
       const url = `../database/${f.split(" ")[5].replace(/title="/, "")}`,
         module = await import(url);
       const links = await module.links();
-
+console.log(url)
       for (const link of links) {
         const { movieLinks } = await Decrypt(link);
         object.movieLinks.push(...movieLinks);

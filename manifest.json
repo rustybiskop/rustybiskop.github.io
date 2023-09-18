@@ -5,8 +5,8 @@
   "author": "K.T Motshoana",
   "lang": "en-US",
   "start_url": ".",
-  "background_color": "black",
-  "theme_color": "#00ff00",
+  "background_color": "#252525",
+  "theme_color": "#252525",
   "scope": "/",
   "display": "standalone",
   "icons": [

@@ -30,7 +30,6 @@ export default async function Home() {
       recommended = await importRecommendedFiles();
 
     if (streamingNow?.length) {
-      streamingNow = streamingNow.reverse();
       streamingNow = uniqueObjects(
         uniqueArray(streamingNow, recommended.length ? recommended : [])
       );
